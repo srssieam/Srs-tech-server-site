@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const express = require('express');
 const cors = require('cors');
@@ -44,6 +44,13 @@ async function run() {
         const cursor = productCollection.find();
         const result = await cursor.toArray();
         res.send(result);
+    })
+    // delete operation
+    app.delete('/products/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await productCollection.deleteOne(query);
+      res.send(result);
     })
 
     // crud operation for cart
