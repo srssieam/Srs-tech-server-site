@@ -30,18 +30,31 @@ async function run() {
 
     const database = client.db("productDB");
     const productCollection = database.collection("product");
+    const cartCollection = database.collection("cart");
 
-
+    // crud operation for products
     app.post('/products', async(req, res)=>{
         const newProduct = req.body;
         console.log(newProduct);
         const result = await productCollection.insertOne(newProduct)
         res.send(result);
     })
-
     // read operation
     app.get('/products', async(req, res)=>{
         const cursor = productCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
+    // crud operation for cart
+    app.post('/cart', async(req, res)=>{
+        const product = req.body;
+        console.log(product);
+        const result = await cartCollection.insertOne(product)
+        res.send(result);
+    })
+    app.get('/cart', async(req, res)=>{
+        const cursor = cartCollection.find();
         const result = await cursor.toArray();
         res.send(result);
     })
