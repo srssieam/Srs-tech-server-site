@@ -28,6 +28,8 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    
+
     const database = client.db("productDB");
     const productCollection = database.collection("product");
     const cartCollection = database.collection("cart");
